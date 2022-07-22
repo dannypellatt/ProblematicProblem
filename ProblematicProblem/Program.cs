@@ -8,7 +8,7 @@ namespace ProblematicProblem
     public class Program
     {
         public static Random rng;
-        static bool cont = true;
+        bool cont = true;
         static List<string> activities = new List<string>() {
                                                             "Movies",
                                                             "Paintball",
@@ -23,8 +23,9 @@ namespace ProblematicProblem
 
         static void Main(string[] args)
         {
-            Console.Write("Hello, welcome to the random activity generator! \nWould you like to generate a random activity? yes/no: ");
-            bool cont = bool.Parse(Console.ReadLine());
+            Console.Write("Hello, welcome to the random activity generator! \n" +
+                "Would you like to generate a random activity? yes/no: ");
+            bool cont = "yes".Equals(Console.ReadLine());
             Console.WriteLine();
             Console.Write("We are going to need your information first! What is your name? ");
             string userName = Console.ReadLine();
@@ -32,18 +33,18 @@ namespace ProblematicProblem
             Console.Write("What is your age? ");
             int userAge = Int32.Parse(Console.ReadLine());
             Console.WriteLine();
-            Console.Write("Would you like to see the current list of activities? Sure/No thanks: ");
-            bool seeList = bool.Parse(Console.ReadLine());
+            Console.Write("Would you like to see the current list of activities? yes/no thanks: ");
+            bool seeList = Console.ReadLine().ToLower() == "yes";
             if (seeList)
             {
                 foreach (string activity in activities)
                 {
                     Console.Write($"{activity} ");
-                    Thread.Sleep(250);
+                    Thread.Sleep(50);
                 }
                 Console.WriteLine();
                 Console.Write("Would you like to add any activities before we generate one? yes/no: ");
-                bool addToList = bool.Parse(Console.ReadLine());
+                bool addToList = "yes".Equals(Console.ReadLine().ToLower());
                 Console.WriteLine();
 
                 while (addToList)
@@ -54,11 +55,11 @@ namespace ProblematicProblem
                     foreach (string activity in activities)
                     {
                         Console.Write($"{activity} ");
-                        Thread.Sleep(250);
+                        Thread.Sleep(50);
                     }
                     Console.WriteLine();
                     Console.WriteLine("Would you like to add more? yes/no: ");
-                    addToList = bool.Parse(Console.ReadLine());
+                    addToList = Console.ReadLine().ToLower() == "yes";
                 }
             }
 
@@ -68,7 +69,7 @@ namespace ProblematicProblem
                 for (int i = 0; i < 10; i++)
                 {
                     Console.Write(". ");
-                    Thread.Sleep(500);
+                    Thread.Sleep(50);
                 }
                 Console.WriteLine();
                 Console.Write("Choosing your random activity");
@@ -88,10 +89,24 @@ namespace ProblematicProblem
                     randomNumber = rng.Next(activities.Count);
                     randomActivity = activities[randomNumber];
                 }
-                Console.Write($"Ah got it! {randomActivity}, your random activity is: {userName}! " +
+                Console.Write($"Ah got it! {userName}, your random activity is: {randomActivity}! " +
                     $"Is this ok or do you want to grab another activity? Keep/Redo: ");
                 Console.WriteLine();
-                cont = bool.Parse(Console.ReadLine());
+                string ans = Console.ReadLine().ToLower();
+                if (ans == "keep")
+                {
+                    Console.WriteLine($"Great! {userName}, your random activity is: {randomActivity}!");
+                    break;
+                }
+                else if (ans == "redo")
+                {
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine("That's not an option, please try again.");
+                    continue;
+                }
             }
         }
     }
