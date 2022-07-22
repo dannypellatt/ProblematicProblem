@@ -7,7 +7,7 @@ namespace ProblematicProblem
 {
     public class Program
     {
-        public static Random rng;
+        public static Random rng = new Random();
         bool cont = true;
         static List<string> activities = new List<string>() {
                                                             "Movies",
